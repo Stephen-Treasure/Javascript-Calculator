@@ -29,6 +29,7 @@ const calculate = (op, num1, num2) => {
         case "/":
             result = parseFloat(num1) / parseFloat(num2);
             break;
+        case "%":
     }
     return result;
 };
