@@ -1,118 +1,78 @@
-// let input = document.getElementById("input");
+let currentValue = "";
+let operatorValue = "";
+let nextValue = "";
+let tempValue = "";
 
-// const calc = (num) => {
-//     input.value += num;
-// };
-// let btns = Array.from(document.querySelectorAll(".btn"));
-// console.log(btns);
+const btns = document.querySelectorAll(".btn");
+console.log(btns);
+const operators = document.querySelectorAll(".operator");
+const dot = document.getElementById(".");
 
-// btns.map((btn) => {
-//     btn.addEventListener("click", (event) => {
-//         event.preventDefault();
-//         if (event.target.innerText == "C") {
-//             input.value = "";
-//         } else if (event.target.innerText) {
-//             input.value += event.target.innerText;
-//         }
-//         console.log(event.target.innerText);
-//     });
-// });
-
-//numbers
-let decimal = document.getElementById(".");
-let zero = document.getElementById("0");
-let one = document.getElementById("1");
-let two = document.getElementById("2");
-let three = document.getElementById("3");
-let four = document.getElementById("4");
-let five = document.getElementById("5");
-let six = document.getElementById("6");
-let seven = document.getElementById("7");
-let eight = document.getElementById("8");
-let nine = document.getElementById("9");
-
-//operators
-let divide = document.getElementById("/");
-let multiply = document.getElementById("*");
-let subtract = document.getElementById("-");
-let plus = document.getElementById("+");
-let percentage = document.getElementById("%");
-let equals = document.getElementById("=");
-
-let clear = document.getElementById("C");
-
-//input
+const equal = document.getElementById("=");
 let input = document.getElementById("input");
 
-//display input numbers
-decimal.addEventListener("click", () => {
-    input.value += decimal.value;
-});
-zero.addEventListener("click", () => {
-    input.value += zero.value;
-});
-one.addEventListener("click", () => {
-    input.value += one.value;
+const clear = document.getElementById("C");
+
+const calculate = (op, num1, num2) => {
+    let result = 0;
+    switch (op) {
+        case "+":
+            result = parseFloat(num1) + parseFloat(num2);
+
+            break;
+        case "-":
+            result = parseFloat(num1) - parseFloat(num2);
+            break;
+        case "*":
+            result = parseFloat(num1) * parseFloat(num2);
+            break;
+        case "/":
+            result = parseFloat(num1) / parseFloat(num2);
+            break;
+    }
+    return result;
+};
+
+let counter = 0;
+dot.addEventListener("click", () => {
+    input.value += dot.value;
 });
 
-two.addEventListener("click", () => {
-    input.value += two.value;
+btns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+        if (operatorValue === "") {
+            currentValue += btn.value;
+            console.log(currentValue);
+            input.value = currentValue;
+        } else {
+            nextValue += btn.value;
+            console.log(nextValue);
+            input.value = nextValue;
+        }
+    });
 });
 
-three.addEventListener("click", () => {
-    input.value += three.value;
+operators.forEach((operator) => {
+    operator.addEventListener("click", () => {
+        operatorValue = operator.value;
+        console.log(operatorValue);
+        input.value = operatorValue;
+    });
 });
 
-four.addEventListener("click", () => {
-    input.value += four.value;
-});
+equal.addEventListener("click", () => {
+    console.log(calculate(operatorValue, currentValue, nextValue));
 
-five.addEventListener("click", () => {
-    input.value += five.value;
-});
+    input.value = calculate(operatorValue, currentValue, nextValue);
 
-six.addEventListener("click", () => {
-    input.value += six.value;
-});
-
-seven.addEventListener("click", () => {
-    input.value += seven.value;
-});
-
-eight.addEventListener("click", () => {
-    input.value += eight.value;
-});
-
-nine.addEventListener("click", () => {
-    input.value += nine.value;
-});
-
-//display operators
-
-divide.addEventListener("click", () => {
-    input.value += divide.value;
-});
-
-multiply.addEventListener("click", () => {
-    input.value += multiply.value;
-});
-
-subtract.addEventListener("click", () => {
-    input.value += subtract.value;
-});
-
-plus.addEventListener("click", () => {
-    input.value += plus.value;
-});
-
-percentage.addEventListener("click", () => {
-    input.value += percentage.value;
-});
-
-equals.addEventListener("click", () => {
-    input.value += equals.value;
+    currentValue = calculate(operatorValue, currentValue, nextValue);
+    operatorValue = "";
+    nextValue = "";
 });
 
 clear.addEventListener("click", () => {
+    currentValue = "";
+    operatorValue = "";
+    nextValue = "";
     input.value = "";
 });
