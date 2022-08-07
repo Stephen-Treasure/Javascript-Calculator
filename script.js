@@ -14,24 +14,17 @@ let input = document.getElementById("input");
 const clear = document.getElementById("C");
 
 const calculate = (op, num1, num2) => {
-    let result = 0;
     switch (op) {
         case "+":
-            result = parseFloat(num1) + parseFloat(num2);
-
-            break;
+            return parseFloat(num1) + parseFloat(num2);
         case "-":
-            result = parseFloat(num1) - parseFloat(num2);
-            break;
+            return parseFloat(num1) - parseFloat(num2);
         case "*":
-            result = parseFloat(num1) * parseFloat(num2);
-            break;
+            return parseFloat(num1) * parseFloat(num2);
         case "/":
-            result = parseFloat(num1) / parseFloat(num2);
-            break;
+            return parseFloat(num1) / parseFloat(num2);
         case "%":
     }
-    return result;
 };
 
 let counter = 0;
@@ -41,6 +34,15 @@ dot.addEventListener("click", () => {
 
 btns.forEach((btn) => {
     btn.addEventListener("click", () => {
+        if (currentValue.includes(".") && btn.value == ".") {
+            currentValue = currentValue.slice(0, -1);
+            console.log("oho");
+        }
+        if (nextValue.includes(".") && btn.value == ".") {
+            nextValue = nextValue.slice(0, -1);
+            console.log("oho");
+        }
+
         if (operatorValue === "") {
             currentValue += btn.value;
             console.log(currentValue);
@@ -55,6 +57,13 @@ btns.forEach((btn) => {
 
 operators.forEach((operator) => {
     operator.addEventListener("click", () => {
+        if (currentValue !== "" && operatorValue !== "" && nextValue !== "") {
+            input.value = currentValue;
+            currentValue = calculate(operatorValue, currentValue, nextValue);
+            operatorValue = "";
+            nextValue = "";
+        }
+
         operatorValue = operator.value;
         console.log(operatorValue);
         input.value = operatorValue;
