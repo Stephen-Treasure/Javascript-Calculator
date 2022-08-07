@@ -1,7 +1,6 @@
 let currentValue = "";
 let operatorValue = "";
 let nextValue = "";
-let tempValue = "";
 
 const btns = document.querySelectorAll(".btn");
 console.log(btns);
@@ -27,20 +26,13 @@ const calculate = (op, num1, num2) => {
     }
 };
 
-let counter = 0;
-dot.addEventListener("click", () => {
-    input.value += dot.value;
-});
-
 btns.forEach((btn) => {
     btn.addEventListener("click", () => {
         if (currentValue.includes(".") && btn.value == ".") {
             currentValue = currentValue.slice(0, -1);
-            console.log("oho");
         }
         if (nextValue.includes(".") && btn.value == ".") {
             nextValue = nextValue.slice(0, -1);
-            console.log("oho");
         }
 
         if (operatorValue === "") {
