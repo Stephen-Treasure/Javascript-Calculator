@@ -28,21 +28,27 @@ const calculate = (op, num1, num2) => {
 
 btns.forEach((btn) => {
     btn.addEventListener("click", () => {
-        if (currentValue.includes(".") && btn.value == ".") {
-            currentValue = currentValue.slice(0, -1);
-        }
-        if (nextValue.includes(".") && btn.value == ".") {
-            nextValue = nextValue.slice(0, -1);
+        if (
+            currentValue.toString().includes(".") ||
+            nextValue.toString().includes(".")
+        ) {
+            dot.value = "";
+            console.log("d", dot.value);
         }
 
         if (operatorValue === "") {
+            // dot.value = ".";
             currentValue += btn.value;
-            console.log(currentValue);
+            console.log("c", currentValue);
             input.value = currentValue;
         } else {
-            nextValue += btn.value;
-            console.log(nextValue);
-            input.value = nextValue;
+            dot.value = ".";
+            if (nextValue.includes(".")) {
+                dot.value = "";
+            }
+            nextValue += btn.value.toString();
+            console.log("n", nextValue);
+            input.value = nextValue.toString();
         }
     });
 });
@@ -54,11 +60,13 @@ operators.forEach((operator) => {
             currentValue = calculate(operatorValue, currentValue, nextValue);
             operatorValue = "";
             nextValue = "";
+            dot.value = ".";
         }
 
         operatorValue = operator.value;
         console.log(operatorValue);
         input.value = operatorValue;
+        console.log("o", input.value);
     });
 });
 
@@ -70,6 +78,7 @@ equal.addEventListener("click", () => {
     currentValue = calculate(operatorValue, currentValue, nextValue);
     operatorValue = "";
     nextValue = "";
+    dot.value = ".";
 });
 
 clear.addEventListener("click", () => {
@@ -77,4 +86,5 @@ clear.addEventListener("click", () => {
     operatorValue = "";
     nextValue = "";
     input.value = "";
+    dot.value = ".";
 });
